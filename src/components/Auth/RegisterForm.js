@@ -10,6 +10,7 @@ export default function FormRegister(props) {
 
   const formik = useFormik({
     initialValues: initialValues(),
+    validationSchema: Yup.object(validationSchema()),
     onSubmit: (formData) => {
       console.log("Registro enviado");
       console.log(formData);
@@ -22,23 +23,31 @@ export default function FormRegister(props) {
         label="Email"
         style={formStyles.input}
         onChangeText={(text) => formik.setFieldValue("email", text)}
+        value={formik.values.email}
+        error={formik.errors.email}
       />
       <TextInput
         label="Nombre de usuario"
         style={formStyles.input}
         onChangeText={(text) => formik.setFieldValue("username", text)}
+        value={formik.values.username}
+        error={formik.errors.username}
       />
       <TextInput
         label="Contraseña"
         style={formStyles.input}
         onChangeText={(text) => formik.setFieldValue("password", text)}
         secureTextEntry
+        value={formik.values.password}
+        error={formik.errors.password}
       />
       <TextInput
         label="Repetir contraseña"
         style={formStyles.input}
         onChangeText={(text) => formik.setFieldValue("repeatpassword", text)}
         secureTextEntry
+        value={formik.values.repeatpassword}
+        error={formik.errors.repeatpassword}
       />
       <Button
         mode="contained"
@@ -65,5 +74,15 @@ function initialValues() {
     username: "",
     password: "",
     repeatpassword: "",
+  };
+}
+function validationSchema() {
+  return {
+    email: Yup.string().email(true).required(true),
+    username: Yup.string().required(true),
+    password: Yup.string().required(true),
+    repeatpassword: Yup.string()
+      .required(true)
+      .oneOf([Yup.ref("password")], true),
   };
 }
