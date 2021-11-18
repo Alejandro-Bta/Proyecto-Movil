@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
+import RegisterForm from "../components/Auth/RegisterForm";
 import logo from "../../assets/logo.jpg";
 import { layoutStyle } from "../styles";
 
@@ -8,7 +9,7 @@ export default function Auth() {
   return (
     <View style={layoutStyle.container}>
       <Image style={styles.logo} source={logo} />
-      {showLogin ? <Text>FormLogin</Text> : <Text>FormRegister</Text>}
+      {showLogin ? <Text>FormLogin</Text> : <RegisterForm />}
     </View>
   );
 }
