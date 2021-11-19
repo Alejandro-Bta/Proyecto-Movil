@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { registerApi } from "../../api/user";
 import { formStyles } from "../../styles";
 
 export default function FormRegister(props) {
@@ -11,9 +12,13 @@ export default function FormRegister(props) {
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
-    onSubmit: (formData) => {
-      console.log("Registro enviado");
-      console.log(formData);
+    onSubmit: async (formData) => {
+      try {
+        await registerApi(formData);
+        console.log("OK");
+      } catch (error) {
+        console.log(error);
+      }
     },
   });
 
