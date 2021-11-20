@@ -3,6 +3,7 @@ import { View, Text } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import Toast from "react-native-root-toast";
 import { registerApi } from "../../api/user";
 import { formStyles } from "../../styles";
 
@@ -17,7 +18,9 @@ export default function FormRegister(props) {
         await registerApi(formData);
         console.log("OK");
       } catch (error) {
-        console.log(error);
+        Toast.show("Error al registrar el usuario", {
+          position: Toast.positions.CENTER,
+        });
       }
     },
   });
