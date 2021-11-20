@@ -8,11 +8,12 @@ import {
   Platform,
 } from "react-native";
 import RegisterForm from "../components/Auth/RegisterForm";
+import LoginForm from "../components/Auth/LoginForm";
 import logo from "../../assets/logo.jpg";
 import { layoutStyle } from "../styles";
 
 export default function Auth() {
-  const [showLogin, setShowLogin] = useState(false);
+  const [showLogin, setShowLogin] = useState(true);
 
   const changeForm = () => setShowLogin(!showLogin);
 
@@ -23,7 +24,7 @@ export default function Auth() {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
       >
         {showLogin ? (
-          <Text>FormLogin</Text>
+          <LoginForm changeForm={changeForm} />
         ) : (
           <RegisterForm changeForm={changeForm} />
         )}

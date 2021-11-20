@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import { useFormik } from "formik";
@@ -9,15 +9,18 @@ import { formStyles } from "../../styles";
 
 export default function FormRegister(props) {
   const { changeForm } = props;
+  const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: initialValues(),
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
+      setLoading(true);
       try {
         await registerApi(formData);
-        console.log("OK");
+        changeForm();
       } catch (error) {
+        setLoading(false);
         Toast.show("Error al registrar el usuario", {
           position: Toast.positions.CENTER,
         });
@@ -61,6 +64,7 @@ export default function FormRegister(props) {
         mode="contained"
         style={formStyles.btnSucces}
         onPress={formik.handleSubmit}
+        loading={loading}
       >
         Registrarse
       </Button>
